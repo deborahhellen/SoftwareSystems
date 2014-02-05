@@ -10,6 +10,12 @@ License: GNU GPLv3
 
 int global;
 
+void print_address_local()
+{
+	int i = 12;
+	printf ("Address of local variable is %p\n", &i);
+}
+
 int main ()
 {
     int local = 5;
@@ -19,6 +25,8 @@ int main ()
     printf ("Address of global is %p\n", &global);
     printf ("Address of local is %p\n", &local);
     printf ("Address of p is %p\n", p);
+
+    print_address_local();
     
     return 0;
 }

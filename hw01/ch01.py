@@ -53,6 +53,7 @@ class Controller:
         """
         self.kp, self.ki = kp, ki
         self.i = 0       # Cumulative error ("integral")
+        
 
     def work( self, e ):
         """Computes the number of jobs to be added to the ready queue.
