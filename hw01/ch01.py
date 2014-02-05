@@ -100,7 +100,7 @@ def closed_loop( c, p, tm=5000 ):
 
 # ============================================================
 
-c = Controller( 1.25, 0, 0)
+c = Controller( 1.25, 0, .01)
 p = Buffer( 50, 10 )
 
 # run the simulation
