@@ -18,3 +18,7 @@ tutorial: tutorial.c
 
 test_rand: test_rand.c
 	gcc -O3 test_rand.c -o test_rand
+
+test_query_imdb: test_query_imdb.c
+	gcc --std=gnu99 -I$(LIB) $(LIB)/*.c test_query_imdb.c -o test_query_imdb
+
