@@ -38,10 +38,13 @@ void setup() {
 void writeByte(int x) {
   int pin;
   
-  for (pin=13; pin>=6; pin--) {
-    digitalWrite(pin, x&1);
-    x >>= 1;
-  }
+//  for (pin=13; pin>=6; pin--) {
+//    digitalWrite(pin, x&1);
+//    x >>= 1;
+//  }
+
+PORTD ^= B00000011;
+PORTB ^= B00111111;
 }
 
 int low = 36;

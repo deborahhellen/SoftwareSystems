@@ -133,15 +133,20 @@ int hash_hashable(Hashable *hashable)
 /* Compares integers. */
 int equal_int (void *ip, void *jp)
 {
-    // FIX ME!
+    if (ip - jp == 0) {
+        return 1;
+    }
     return 0;
+
 }
 
 
 /* Compares strings. */
 int equal_string (void *s1, void *s2)
 {
-    // FIX ME!
+    if (strcmp(s1, s2) == 0) {
+        return 1;
+    }
     return 0;
 }
 
@@ -149,7 +154,9 @@ int equal_string (void *s1, void *s2)
 /* Compares Hashables. */
 int equal_hashable(Hashable *h1, Hashable *h2)
 {
-    // FIX ME!
+    if (h1->key == h2->key) {
+        return 1;
+    }
     return 0;
 }
 
@@ -189,8 +196,12 @@ typedef struct node {
 /* Makes a Node. */
 Node *make_node(Hashable *key, Value *value, Node *next)
 {
-    // FIX ME!
-    return NULL;
+    Node *node = (Node*) malloc(sizeof(Node));
+    node->key = key;
+    node->value = value;
+    node->next = next;
+
+    return node;
 }
 
 
@@ -205,8 +216,11 @@ void print_node(Node *node)
 
 /* Prints all the Nodes in a list. */
 void print_list(Node *node)
-{
-    // FIX ME!
+{   
+    do {
+    print_node(node);
+    node = node->next;
+    } while (node->next);
 }
 
 
@@ -223,8 +237,16 @@ Node *prepend(Hashable *key, Value *value, Node *rest)
 /* Looks up a key and returns the corresponding value, or NULL */
 Value *list_lookup(Node *list, Hashable *key)
 {
-    // FIX ME!
-    return NULL;
+    do {
+        if (list->key == key) {
+            return list->value;
+        }
+        list = list->next;
+    } while (list->next); 
+
+    if (list->key == key) {
+        return list->value;
+    }
 }
 
 
@@ -239,8 +261,14 @@ typedef struct map {
 /* Makes a Map with n lists. */
 Map *make_map(int n)
 {
-    // FIX ME!
-    return NULL;
+    Map *map = (Map*) malloc(sizeof(Map));
+    if (map = NULL) {
+        fprintf(stderr, "Can't malloc map");
+        exit(EXIT_FAILURE);
+    }
+    map->n = n;
+    map->lists = (Node **) malloc(sizeof(Node) * n);
+    return map;
 }
 
 
@@ -261,7 +289,8 @@ void print_map(Map *map)
 /* Adds a key-value pair to a map. */
 void map_add(Map *map, Hashable *key, Value *value)
 {
-    // FIX ME!
+    int hashed_val = hash_hashable(key);
+    if
 }
 
 
