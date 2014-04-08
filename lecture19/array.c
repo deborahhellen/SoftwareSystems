@@ -10,13 +10,14 @@ License: Creative Commons Attribution-ShareAlike 3.0
 #include <pthread.h>
 #include "mutex.h"
 
-#define SIZE 1000
+#define SIZE 100000
 
+//represents shared environment btwn parent and child
 typedef struct {
     int next_id;
     int array[SIZE];
     Lock *lock;
-} Environment;
+} Environment; 
 
 Environment *make_environment ()
 {
@@ -49,12 +50,15 @@ void loop_and_count (pthread_t self, Environment *env)
     int id;
     
     while (1) {
+    acquire(env->lock);
 	id = get_next_id (env);
-	
+	release(env->lock);
 	// printf ("%d got %d\n", self, id);
 	
 	if (id >= SIZE) return;
+    acquire(env->lock); //this aquire maybe isn't necessary b/c this is thread safe
 	env->array[id]++;
+    release(env->lock);
     }
 }
 
