@@ -39,7 +39,7 @@ void print_table_entry(gpointer key, gpointer val, gpointer user_data) {
 
 int main () {
 	gchar *data = (gchar *) "Hello"; //initialized to "Hello" for testing
-
+	gsize len = 0;
 	//open file for reading and read it
 	GIOChannel *test = g_io_channel_new_file("leaves_of_grass.txt", "r", NULL);
 	g_io_channel_read_to_end(test, &data, &len, NULL);
