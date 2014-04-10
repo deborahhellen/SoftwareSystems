@@ -6,8 +6,9 @@ License: Creative Commons Attribution-ShareAlike 3.0
 */
 
 
-#include "stdio.h"
-
+#include "stdio.h"  
+#include <stdlib.h> //added this line so that malloc is imported (1)
+    
 typedef struct {
     double *data;
     int len;
@@ -17,7 +18,7 @@ typedef struct {
 Vector *make_vector(int len) {
     Vector *vector = malloc(sizeof(Vector));
 
-    vector->data = calloc(len * sizeof(double *));
+    vector->data = calloc(1, len * sizeof(double *));   //the first argument of calloc was missing (2)
     vector->len = len;
     return vector;
 }
@@ -72,7 +73,7 @@ double *add_vector_func(Vector *A, Vector *B) {
     add_vector(A, B, C);
 }
 
-int main {
+int main (){        //the main function was missing () (3)
     Vector *A = make_vector(4);
     consecutive_vector(A);
     printf("A\n");
@@ -83,13 +84,13 @@ int main {
     printf("B\n");
     print_vector(B);
 
-    Vector *C = add_vector_func(A, B);
+    Vector *C = add_vector_func(A, B); 
     printf("A + B\n");
     print_vector(C);
 
     free_vector(A);
     free_vector(B);
-    free_vector(C);
+    free_vector(C); 
 
-    return 0
+    return 0;   //there was no ; after the 0 (4)
 }

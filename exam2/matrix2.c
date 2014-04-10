@@ -155,6 +155,8 @@ double *row_sum(Matrix *A) {
     return res;
 }
 
+
+
 /* 
    http://en.wikipedia.org/wiki/Magic_square
 
@@ -168,6 +170,61 @@ double *row_sum(Matrix *A) {
 
    Feel free to use row_sum().
 */
+
+int is_magic_square(Matrix *M) {
+    assert(M->rows == M->cols); //this only works for nXn matrices
+
+    double tot = 0.0;
+    double *row_sums;
+    int n, i, j, k, l, m;
+
+    //find sum of first row to use as checking value
+    for (n=0; n<M->cols; n++) {
+        tot += M->data[0][n];
+    }
+
+    //check the rows
+    row_sums = row_sum(M);
+    for (i=0; i<M->rows; i++) {
+        if (row_sums[i] != tot) {
+
+            return 0;     
+        }
+    }
+    //check the cols
+    double check_col;
+    for (j=0; j<M->cols; j++) {
+        check_col = 0.0;
+        for (k=0; k<M->rows; k++) {
+            check_col += M->data[k][j];
+        }
+        if (check_col != tot) {
+            return 0;
+        }
+    }
+
+    //check the forward diagonal
+    double check_diag1 = 0.0;
+    for (l=0; l<M->rows; l++) {
+        check_diag1 += M->data[l][l];
+    }
+    if (check_diag1 != tot) {
+        return 0;
+    }
+
+    //check the back diagonal
+    double check_diag2 = 0.0;
+    int m_prev;
+    for (m=0; m<M->rows; m++) {
+        m_prev = m - 1;
+        check_diag2 += M->data[m][M->cols - (m_prev+ 2)];
+    }
+    if (check_diag2 != tot) {
+        return 0;
+    }
+    //if it is a magic square, return 1
+    return 1;
+}
 
 
 int main() {
@@ -202,6 +259,25 @@ int main() {
 	printf("row %d\t%lf\n", i, sums[i]);
     }
     // should print 6, 22, 38
+
+    Matrix *E = make_matrix(4,4);
+    consecutive_matrix(E);
+    printf("E:\n");
+    print_matrix(E);
+    int check = is_magic_square(E);
+    if (check) {
+        puts("E is a magic square!\n");
+    } else {
+        puts("E is not a magic square =(\n");
+    }
+
+    Matrix *F = make_matrix(3,3);
+    int check2 = is_magic_square(F);
+    if (check2) {
+        puts("F is a magic square!\n");
+    } else {
+        puts("F is not a magic square =(\n");
+    }
 
     return 0;
 }
