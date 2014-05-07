@@ -44,7 +44,6 @@ int main(void) {
     char txt[4];
     catch_signal(SIGALRM, times_up);
     catch_signal(SIGINT, end_game);
-    srandom((unsigned int) time(NULL));
 
     while(1) {
 	a = rand() % 11;
